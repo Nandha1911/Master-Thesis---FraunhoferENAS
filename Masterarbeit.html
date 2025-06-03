@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slides 4, 6, and 8 – Combined View</title>
+  <style>
+    .row { display: flex; gap: 20px; margin-bottom: 20px; }
+    .row img { max-width: 100%; height: auto; }
+    .caption { text-align: center; font-style: italic; font-size: 14px; }
+    img { border: 1px solid #ccc; padding: 5px; background: #f9f9f9; }
+  </style>
+</head>
+<body>
+    <section style="padding: 40px 20px; text-align: center; font-family: serif;">
+        <h1 style="font-size: 36px; line-height: 1.3; margin-bottom: 30px;">
+          Comparison and Evaluation of Algorithms
+          and Models of Non-Linear Damage Development<br>
+          with Regard to their Use in the
+          Reliability Assessment of Electronic Components
+        </h1>
+      
+        <p style="font-size: 20px; margin: 30px 0;">
+          External Master-Thesis completed at<br>
+          <strong>Fraunhofer-Institut für Elektronische Nanosysteme ENAS, Chemnitz</strong>
+        </p>
+      
+        <p style="font-size: 20px; margin-top: 40px;">
+          submitted by<br>
+          <strong>Nandha Gopal Mariappan</strong>
+        </p>
+      </section>
+  <!-- Slide 4 -->
+  <section>
+    <h1>Experimental Study Overview</h1>
+    <div class="text-block" style="font-size: 18px; line-height: 1.6; flex: 1; min-width: 300px;">
+        <p><strong>Material:</strong> SAC (Sn-Ag-Cu) – Die attach material in power electronics due to its thermal and electrical properties.</p>
+      </div>
+      
+      <div class="text-block" style="font-size: 18px; line-height: 1.6; flex: 1; min-width: 300px;">
+        <p><strong>Experimental Method:</strong> Damage evaluated in the die attach layer using Scanning Acoustic Microscopy (SAM) and Pulsed Infrared Thermography (PIRT) after passive thermal cycling tests.</p>
+      </div>
+      
+    <div class="row">
+      <div>
+        <img src="image1.png" alt="Exploded view of electronic component" width="900">
+        <div class="caption"><strong>Fig 1: Exploded view of electronic component</strong></div>
+      </div>
+      <div>
+        <img src="image2.png" alt="Temperature profile used in experiment" width="300">
+        <div class="caption"><strong>Fig 2: Temperature profile used in experiment</strong></div>
+      </div>
+      <div>
+        <p><strong>Table 1: Delamination in % over cycles through experimental method</strong></p>
+        <table border="1">
+         <tr><th>Cycles</th><th>Avg. Delamination in Die Attach (%)</th><th>Std. Deviation (%)</th></tr>
+        <tr><td>0</td><td>7.67</td><td>0.34</td></tr>
+        <tr><td>200</td><td>11.76</td><td>0.83</td></tr>
+        <tr><td>400</td><td>13.10</td><td>1.30</td></tr>
+        <tr><td>600</td><td>14.12</td><td>1.54</td></tr>
+        <tr><td>800</td><td>16.92</td><td>1.32</td></tr>
+        <tr><td>1000</td><td>18.97</td><td>1.45</td></tr>
+    </table>
+      </div>
+    </div>
+    <div class="text-block" style="font-size: 18px; line-height: 1.6; flex: 1; min-width: 300px;">
+    <p><strong>Aim of the thesis:</strong> 
+    </div>
+    <div class="text-block" style="font-size: 18px; line-height: 1.6; flex: 1; min-width: 300px;">
+        <p>
+          In this thesis, a power electronic component is modeled and simulated using the finite element software Abaqus. 
+          The simulation results are combined with analytical approaches—specifically, non-linear damage models—to predict 
+          the damage progression in the SAC (Sn-Ag-Cu) die attach layer. This methodology enables the evaluation of damage 
+          percentage without the need for physical testing, thereby saving time and resources while maintaining accuracy.
+        </p>
+      </div>
+
+  <hr>
+
+  <!-- Slide 6 -->
+  <section>
+    <h2>Abaqus Modeling</h2>
+
+    <div class="row" style="display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 20px;">
+        <!-- Left Image -->
+        <div style="flex: 1; text-align: center;">
+          <img src="image3.png" alt="Left image description" style="max-width: 60%; height: auto; border: 1px solid #ccc; padding: 5px; background: #f9f9f9;">
+          <div class="caption" style="font-style: italic; font-size: 14px;"><strong>Fig 3 : Mesh view of electronic component</strong>​</div>
+        </div>
+      
+        <!-- Right Image -->
+        <div style="flex: 1; text-align: center;">
+          <img src="image4.png" alt="Right image description" style="max-width: 42%; height: auto; border: 1px solid #ccc; padding: 5px; background: #f9f9f9;">
+          <div class="caption" style="font-style: italic; font-size: 14px;"><strong>Fig 4 : Mesh convergence analysis</strong>​</div>
+        </div>
+      </div>
+
+      <div class="row" style="display: flex; justify-content: space-between; gap: 20px; margin-bottom: 20px;">
+        <div style="flex: 1; text-align: center;">
+          <img src="image5.png" alt="Side view with material names" style="width: 100%; max-width: 560px; height: auto; border: 1px solid #ccc; padding: 5px; background: #f9f9f9;">
+          <div class="caption"><strong>Fig 5: Side view of electronic component with material names</strong></div>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <img src="image6.png" alt="Boundary conditions of component" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ccc; padding: 5px; background: #f9f9f9;">
+          <div class="caption"><strong>Fig 6: Boundary conditions of electronic component</strong></div>
+        </div>
+      </div>
+    <div class="text-block" style="font-size: 18px; line-height: 1.6; flex: 1; min-width: 300px;">
+    <ul>
+      <li><strong>Mesh Refinement:</strong> Fine at corners, coarse at boundaries</li>
+      <li><strong>Boundary Conditions:</strong>
+        <ul>
+          <li>X-symmetry on Y-axis</li>
+          <li>Y-symmetry on X-axis</li>
+          <li>One point fixed at Z = 0</li>
+        </ul>
+      </li>
+      <li><strong>CEEQ (Equivalent Creep Strain):</strong> Best damage indicator in die attach layer</li>
+      <li><strong>Creep:</strong> Time-dependent plastic deformation; dominant degradation mode due to thermal cycling</li>
+      <li><strong>Mesh Convergence:</strong> Achieved at 0.2484 mm with matching delamination values of 7.67% and 18.97%</li>
+    </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- Slide 8 -->
+  <section>
+    <h2>Delamination Areas for 6 Simulations</h2>
+    <div class="row" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+        <div style="text-align: center;">
+          <img src="image13.png" alt="Delaminated area chart" width="400">
+          <div class="caption"><strong>Fig 7: Time vs. temperature graph for initial simulation </strong></div>
+        </div>
+        <div style="text-align: center;">
+          <img src="image14.png" alt="Temperature cycle graph" width="400">
+          <div class="caption"><strong>Fig 8: Time vs. temperature graph for subsequent simulations</strong></div>
+        </div>
+      </div>
+      
+      <!-- Bullet points below the graphs -->
+      <div class="text-block" style="font-size: 18px; line-height: 1.6; margin-top: 10px;">
+        <ul>
+          <li>After applying mesh, boundary conditions, and apply initial thermal load (270°C to 125°C over 3600 s).</li>
+          <li>Initial damage area (7.67%) is removed after the first step.</li>
+          <li>Restart from step 2 and run first simulation for 3 thermal cycles (125°C → −40°C → 125°C).</li>
+          <li>Extract CEEQ values (10% volume) and calculate Δε (step 8 − step 6).</li>
+          <li>Use Coffin-Manson equation with C1 and C2 to estimate cycles to failure.</li>
+          <li>Determine damage value using linear or nonlinear damage models.</li>
+          <li>Identify newly damaged elements and deactivate them in the next simulation.</li>
+          <li>Repeat for 5 simulations (15 thermal cycles total), updating damage and Δε each time.</li>
+        </ul>
+      </div>
+  
+      <div class="row" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 20px;">
+        <div style="text-align: center; flex: 1;">
+          <img src="image7.png" alt="Initial state" width="200">
+          <div class="caption">Fig 9a: Initial</div>
+        </div>
+        <div style="text-align: center; flex: 1;">
+          <img src="image8.png" alt="First simulation" width="200">
+          <div class="caption">Fig 9b: First</div>
+        </div>
+        <div style="text-align: center; flex: 1;">
+          <img src="image9.png" alt="Second simulation" width="200">
+          <div class="caption">Fig 9c: Second</div>
+        </div>
+      </div>
+      
+      <div class="row" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <div style="text-align: center; flex: 1;">
+          <img src="image10.png" alt="Third simulation" width="200">
+          <div class="caption">Fig 9d: Third</div>
+        </div>
+        <div style="text-align: center; flex: 1;">
+          <img src="image11.png" alt="Fourth simulation" width="200">
+          <div class="caption">Fig 9e: Fourth</div>
+        </div>
+        <div style="text-align: center; flex: 1;">
+          <img src="image12.png" alt="Fifth simulation" width="200">
+          <div class="caption">Fig 9f: Fifth</div>
+        </div>
+      </div>
+  
+    <div style="text-align: center;">
+      <h4><strong>Fig 9: Delaminated area for 6 simulations</strong></h4>
+    </div>
+  </section>
+
+  <section>
+    <h2>Programming</h2>
+    <div class="row" style="display: flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+      
+      <!-- Left: UML Diagram -->
+      <div style="flex: 1; text-align: center;">
+        <img src="image15.png" alt="UML Class Diagram" width="60%">
+        <div class="caption"><strong>Fig 3.1: UML class diagram</strong></div>
+      </div>
+  
+      <!-- Right: Bullet Points -->
+      <div style="flex: 1;">
+        <ul style="font-size: 18px; line-height: 1.6;">
+          <li>Implemented using Python 3.11 with object-oriented design.</li>
+          <li>Abstract base class used for all damage models.</li>
+          <li>Modular and flexible code structure for easy extension.</li>
+          <li>Seamless integration with simulation results.</li>
+          <li>Supports efficient lifetime prediction.</li>
+        </ul>
+      </div>
+      
+    </div>
+  </section>
+  <hr>
+  
+  <!-- Conclusion Section -->
+  <section>
+    <h2>Conclusion</h2>
+  
+    <!-- Graphs in the same row -->
+    <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 30px;">
+      <div style="text-align: center;">
+        <img src="image16.png" alt="Damage vs. cycles graph" width="400px">
+        <div class="caption"><strong>Fig 10: Damage accumulation before parameter identification</strong></div>
+      </div>
+      <div style="text-align: center;">
+        <img src="image17.png" alt="Comparison graph" width="400px">
+        <div class="caption"><strong>Fig 11: Damage accumulation after parameter identification</strong></div>
+      </div>
+    </div>
+  
+    <!-- Bullet points below -->
+    <div style="text-align: left;">
+      <ul style="font-size: 18px; line-height: 1.6;">
+        <li>Developed and simulated the component in Abaqus and extracted ∆𝜀 using evaluation script.</li>
+        <li>Programmed linear and non-linear damage accumulation models to calculate the damage.</li>
+        <li>Conducted parametric studies for all the damage accumulation models.</li>
+        <li>HRSu model – most accurate, with all damage values within the experimental range.</li>
+        <li>Study enhances lifetime prediction, reliability assessment, and failure prevention in electronic components.</li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>
+
