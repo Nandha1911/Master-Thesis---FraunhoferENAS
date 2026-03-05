@@ -210,6 +210,31 @@
     </div>
   </section>
   <hr>
+
+  <section>
+    <h2>Physics-Informed Parameter Identification</h2>
+    <div class="row" style="display: flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+      
+      <div style="flex: 1; text-align: center;">
+        <div style="border: 1px dashed #666; padding: 20px; background: #eee;">
+            <p style="font-size: 14px; color: #333;"><strong>PINN Architecture</strong><br>
+            Input: Strain/Temp &rarr; Neural Network &rarr; Predicted Stress<br>
+            <strong>Loss = MSE(Data) + &lambda; &middot; Loss(Viscoplastic Residuals)</strong></p>
+        </div>
+        <div class="caption"><strong>Fig 3.2: PIML framework for material calibration</strong></div>
+      </div>
+  
+      <div style="flex: 1;">
+        <ul style="font-size: 18px; line-height: 1.6;">
+          <li><strong>Framework:</strong> Developed using <strong>PyTorch</strong> for the neural network architecture and automatic differentiation (Autograd).</li>
+          <li><strong>Physics Loss:</strong> Integrated viscoplastic constitutive equations directly into the loss function to ensure <strong>thermodynamic consistency</strong>.</li>
+          <li><strong>Optimization:</strong> Utilized <strong>SciPy (L-BFGS-B)</strong> as a second-order optimizer to achieve high-precision convergence of physical parameters.</li>
+          <li><strong>Hybrid Approach:</strong> Combined sparse experimental data with high-fidelity Abaqus simulation results to calibrate non-linear damage models.</li>
+          <li><strong>Accuracy:</strong> Enabled the identification of HRSu model parameters that match experimental delamination trends with <strong>>90% accuracy</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
   
   <!-- Conclusion Section -->
   <section>
@@ -241,4 +266,5 @@
 
 </body>
 </html>
+
 
