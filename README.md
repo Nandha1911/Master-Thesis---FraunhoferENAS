@@ -63,7 +63,7 @@ Finite Element simulations are performed using **Abaqus**, and the numerical res
 - Automated post-processing and lifetime prediction
 - Seamless integration with Abaqus simulation results
 
-#Physics_Informed_ML_Optimization
+### Physics_Informed_ML_Optimization
 A core innovation of this repository is the Physics-Informed Machine Learning (PIML) loop used for parameter identification. This replaces traditional manual fitting with a scientifically constrained optimization.
 
 - Framework: Implemented in PyTorch using Autograd for gradient calculation.
