@@ -68,9 +68,9 @@ A core innovation of this repository is the Physics-Informed Machine Learning (P
 
 - Framework: Implemented in PyTorch using Autograd for gradient calculation.
 
-- The PIML Loop: * Data Loss: Measures the gap between simulation and experimental delamination percentage.
+- The PIML Loop: Huber Loss: Measures the gap between simulation and experimental delamination percentage.
 
-- Physics Loss: Enforces viscoplastic constitutive residuals to ensure thermodynamic consistency.
+- Physics equation: Integrated damage equations directly into the PyTorch loss function, enforcing fundamental physical laws and thermodynamic consistency to ensure predicted parameters remain scientifically valid.
 
 - Solver: Uses the L-BFGS-B optimizer (SciPy) to achieve high-precision convergence of material parameters for the non-linear models.
 
