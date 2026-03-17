@@ -533,6 +533,7 @@
                 <li><a href="#methodology">Methodology</a></li>
                 <li><a href="#results">Results</a></li>
                 <li><a href="#ranking">Ranking</a></li>
+                <li><a href="#technical">Technical</a></li>
                 <li><a href="#conclusion">Conclusion</a></li>
             </ul>
         </nav>
@@ -541,9 +542,10 @@
     <!-- ============= HERO SECTION ============= -->
     <section class="hero">
         <div class="hero-container">
-            <h1>Physics-Informed ML Optimization using SciPy for Parameter Identification and Model Selection </h1>
+            <h1>Comparison and Evaluation of Algorithms and Models of Non-Linear Damage Development</h1>
+            <p>with Regard to Their Use in the Reliability Assessment of Electronic Components</p>
             
-            <p style="font-size: 16px; margin-top: 2rem; color: rgba(255, 255, 255, 0.95);">Comparison and Evaluation of Algorithms and Models of Non-Linear Damage Development with Regard to Their Use in the Reliability Assessment of Electronic Components</p>
+            <p style="font-size: 16px; margin-top: 2rem; color: rgba(255, 255, 255, 0.95);">Physics-Informed ML Optimization using SciPy for Parameter Identification and Model Selection</p>
 
             <!-- IMAGE 1: Hero Section -->
             <div class="hero-image">
@@ -631,7 +633,7 @@
                 <li><strong>Validation:</strong> Models evaluated across all 6 thermal cycle points, not just final cycle</li>
             </ul>
 
-           <h3>Experimental Data - Delamination Across Thermal Cycles</h3>
+            <h3>Experimental Data - Delamination Across Thermal Cycles</h3>
             <p>Experimental measurements of average area of delamination in SAC die-attach layer obtained through SAM and PIRT characterization at each thermal cycling interval:</p>
             <div class="table-container">
                 <table>
@@ -676,7 +678,7 @@
                     </tbody>
                 </table>
             </div>
- 
+
             <div class="highlight-box">
                 <p><strong>✓ Experimental Baseline:</strong> Progressive delamination measured from 7.673% (initial) to 18.972% (1000 cycles) under passive thermal cycling. Standard deviation increases with cycling, reflecting variability in damage accumulation across sampled components.</p>
             </div>
@@ -709,7 +711,7 @@
             <h2>Results - Model Performance Across All Thermal Cycles</h2>
 
             <h3>Damage Predictions at Each Thermal Cycle Point</h3>
-            <p>Complete model performance evaluation across the entire thermal cycling regime (0 to 1000 cycles):</p>
+            <p>Complete model performance evaluation across the entire thermal cycling regime (0 to 1000 cycles) with experimental baseline of progressive delamination:</p>
 
             <div class="table-container">
                 <table>
@@ -734,7 +736,7 @@
                             <td>7.67</td>
                             <td>7.67</td>
                             <td>7.67</td>
-                            <td><strong>7.67</strong></td>
+                            <td><strong>7.673</strong></td>
                         </tr>
                         <tr>
                             <td><strong>200</strong></td>
@@ -744,7 +746,7 @@
                             <td>9.15</td>
                             <td>13.65</td>
                             <td>11.76</td>
-                            <td><strong>11.76</strong></td>
+                            <td><strong>11.757</strong></td>
                         </tr>
                         <tr>
                             <td><strong>400</strong></td>
@@ -754,7 +756,7 @@
                             <td>12.54</td>
                             <td>14.62</td>
                             <td>14.02</td>
-                            <td><strong>13.10</strong></td>
+                            <td><strong>13.102</strong></td>
                         </tr>
                         <tr>
                             <td><strong>600</strong></td>
@@ -764,7 +766,7 @@
                             <td>14.96</td>
                             <td>15.56</td>
                             <td>15.65</td>
-                            <td><strong>14.12</strong></td>
+                            <td><strong>14.116</strong></td>
                         </tr>
                         <tr>
                             <td><strong>800</strong></td>
@@ -784,7 +786,7 @@
                             <td>19.33</td>
                             <td>17.58</td>
                             <td>17.85</td>
-                            <td><strong>18.97</strong></td>
+                            <td><strong>18.972</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -879,6 +881,108 @@
         </div>
     </section>
 
+    <!-- ============= TECHNICAL IMPLEMENTATION SECTION ============= -->
+    <section id="technical" class="light-alt">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2>Technical Implementation & Abaqus Modeling</h2>
+
+            <h3>Finite Element Model Development</h3>
+            <p>The electronic component was modeled comprehensively in Abaqus with detailed attention to mesh refinement, material properties, and boundary conditions:</p>
+
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="image5.png" alt="Abaqus Modeling" class="image-card-img">
+                    <div class="image-card-content">
+                        <div class="image-card-title">Abaqus FEM Implementation</div>
+                        <div class="image-card-caption">Complete finite element mesh with convergence analysis, mesh refinement at interfaces, boundary conditions (X/Y symmetry, Z-fixed point), and CEEQ field output extraction</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>FEM Model Specifications</h3>
+            <ul>
+                <li><strong>Mesh Refinement:</strong> Fine at corners and die-attach interfaces to capture stress concentration; coarse at boundaries for computational efficiency</li>
+                <li><strong>Mesh Convergence:</strong> Achieved at 0.2484 mm element size with CEEQ values correlating to 7.673% (0 cycles) and 18.972% (1000 cycles) delamination</li>
+                <li><strong>Boundary Conditions:</strong> X-symmetry on Y-axis, Y-symmetry on X-axis, one point fixed at Z=0. Symmetry constraints reduce computational domain by 75%</li>
+                <li><strong>Material Layers:</strong> Hierarchical structure: top copper layer, dielectric (epoxy), SAC die-attach solder, bottom copper substrate</li>
+                <li><strong>Equivalent Creep Strain (CEEQ):</strong> Selected as primary damage indicator for SAC solder degradation under thermal cycling</li>
+                <li><strong>Thermal Cycling:</strong> Applied -40°C to 125°C passive thermal loading, capturing creep-dominant degradation mechanism</li>
+            </ul>
+
+            <h3>Programming Architecture & Implementation</h3>
+            <p>The computational workflow is implemented in Python with robust object-oriented design enabling systematic model comparison and physics-informed ML parameter optimization:</p>
+
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="image6.png" alt="Programming Architecture" class="image-card-img">
+                    <div class="image-card-content">
+                        <div class="image-card-title">Software Architecture - UML Class Diagram</div>
+                        <div class="image-card-caption">Object-oriented design showing main() function calling 6 damage model subclasses (Miner, HRSu, HRSe, TS, Pavlou, Batsoulas) inheriting from Fatigue base class with shared Coffin-Manson parameters (C1, C2)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Class Architecture & Model Integration</h3>
+            <ul>
+                <li><strong>Base Class (Fatigue):</strong> Abstract class defining common parameters C1, C2 (Coffin-Manson coefficients), endurance point, and shared methods for all damage models</li>
+                <li><strong>Six Subclasses (M1-M6):</strong> Concrete implementations for Miner, HRSu, HRSe, TS, Pavlou, and Batsoulas models, each with unique damage evolution equations</li>
+                <li><strong>Core Methods:</strong> 
+                    <ul style="margin-top: 0.5rem;">
+                        <li>__init__() - Initialize parameters</li>
+                        <li>coffin_manson() - Compute Coffin-Manson S-N curve</li>
+                        <li>calc_cm_nf_points() - Calculate number of cycles to failure</li>
+                        <li>normalize_nf_points() - Normalize failure data</li>
+                        <li>calc_dmg_all() - Calculate damage across all cycle points</li>
+                        <li>calc_dmg() - Single damage calculation</li>
+                        <li>transition() - State transition logic</li>
+                        <li>const_dmg(), const_load(), var_load() - Different loading scenarios</li>
+                        <li>plot_line(), plot_line_DmgVsCycleration() - Visualization methods</li>
+                    </ul>
+                </li>
+                <li><strong>Python Framework:</strong> NumPy for numerical operations, SciPy.optimize.minimize for L-BFGS-B physics-informed ML optimization</li>
+                <li><strong>Modular Design:</strong> Extensible architecture for adding new damage models or material systems without modifying base class</li>
+            </ul>
+
+            <h3>Physics-Informed ML Parameter Optimization</h3>
+
+            <p><strong>SciPy L-BFGS-B Implementation:</strong></p>
+            <ul>
+                <li><strong>Optimizer:</strong> scipy.optimize.minimize with method='L-BFGS-B' (Limited-memory BFGS with bounds)</li>
+                <li><strong>Cost Function:</strong> Huber loss combining normalized residuals with physics constraints
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Huber Loss = 0.5 × residual² when |residual| ≤ δ</li>
+                        <li>Huber Loss = δ × (|residual| - 0.5 × δ) when |residual| > δ</li>
+                        <li>Provides robustness against experimental measurement outliers</li>
+                    </ul>
+                </li>
+                <li><strong>Residuals:</strong> (D_experimental - D_predicted) / standard_deviation - normalized by experimental uncertainty</li>
+                <li><strong>Parameters Optimized:</strong> C1 (Coffin-Manson coefficient 1), C2 (Coffin-Manson coefficient 2), endurance limit</li>
+                <li><strong>Parameter Bounds:</strong> C1 ∈ [0.1, 6], C2 ∈ [1, 2], ensures physically realistic parameter space</li>
+                <li><strong>Physics Constraint:</strong> Coffin-Manson equation embedded in loss calculation to enforce thermodynamic consistency</li>
+                <li><strong>Convergence:</strong> Typical convergence achieved in 4-6 iterations with L-BFGS-B quasi-Newton method</li>
+            </ul>
+
+            <h3>Optimization Workflow</h3>
+            <ol style="margin: 1.5rem 0; padding-left: 2rem;">
+                <li><strong>Data Input:</strong> Δε strain values extracted from Abaqus CEEQ field at 10% volume damage threshold</li>
+                <li><strong>Experimental Reference:</strong> Delamination measurements from SAM/PIRT at 6 thermal cycle points (0, 200, 400, 600, 800, 1000)</li>
+                <li><strong>Initial Parameters:</strong> Coffin-Manson coefficients from literature with physical bounds</li>
+                <li><strong>L-BFGS-B Optimization:</strong> Minimize Huber loss across all damage measurement points</li>
+                <li><strong>Parameter Extraction:</strong> Optimized C1, C2 values from result.x</li>
+                <li><strong>Final Prediction:</strong> Calculate damage at all cycles using optimized parameters</li>
+                <li><strong>Model Ranking:</strong> Compare predictions across all 6 models, rank by accuracy</li>
+            </ol>
+
+            <div class="highlight-box">
+                <p><strong>✓ Physics-Informed Advantage:</strong> Integration of Coffin-Manson physics directly into loss function constrains optimization to physically meaningful parameter space, preventing overfitting and ensuring model interpretability.</p>
+            </div>
+
+            <div class="highlight-box warning">
+                <p><strong>✓ Comprehensive Implementation:</strong> Python architecture enables seamless integration of Abaqus FEM results with 6 damage models and automated SciPy L-BFGS-B parameter optimization for physics-informed ML identification across entire thermal cycling regime.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ============= CONCLUSION SECTION ============= -->
     <section id="conclusion" class="light">
         <div style="max-width: 1200px; margin: 0 auto;">
@@ -938,6 +1042,7 @@
             <p><strong>Institutions:</strong> Technische Universität Bergakademie Freiberg | Fraunhofer ENAS, Chemnitz</p>
             <p><strong>Thesis Defense:</strong> April 4, 2025</p>
             <p><strong>Best Model:</strong> HRSu (Hashin-Rotem Superior) - Rank #1</p>
+            <p><strong>Final Experimental Delamination:</strong> 18.972% at 1000 Thermal Cycles</p>
             <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 12px;">© 2025 All Rights Reserved | Physics-Informed ML Optimization for Electronic Component Reliability Assessment</p>
         </div>
     </footer>
