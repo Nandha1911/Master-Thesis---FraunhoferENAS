@@ -729,6 +729,36 @@
     <section id="technical" class="light-alt">
         <div style="max-width: 1200px; margin: 0 auto;">
             <h2>Technical Implementation & Abaqus Modeling</h2>
+
+            <h3>Electronic Component Architecture</h3>
+            <p>The power electronic component consists of a hierarchical multi-layer structure designed for thermal stress management and reliable solder joint performance:</p>
+ 
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="image1.png" alt="Exploded view of Electronic component structure" class="image-card-img">
+                    <div class="image-card-content">
+                        <div class="image-card-title">Demonstrator with Heatsink Plate in Exploded View</div>
+                        <div class="image-card-caption"><strong>Component Layers:</strong> DCB substrate (Cu: 50×61×0.3 mm, Ceramic: 50.5×61.5×0.3 mm) | SAC die-attach solder layer (50×61×0.15 mm) | Ni-plating (50×61×0.008 mm) | Simplified heatsink plate (60×65×3 mm). This multi-layer assembly experiences thermal cycling-induced creep damage in the SAC die-attach joint, the focus of this reliability study.</div>
+                    </div>
+                </div>
+            </div>
+ 
+            <h3>Material System & Layer Functions</h3>
+            <ul>
+                <li><strong>DCB Substrate (Direct Copper Bonding):</strong> Copper cladding (50×61×0.3 mm) on ceramic base (50.5×61.5×0.3 mm) provides electrical conductivity and thermal dissipation</li>
+                <li><strong>SAC Die-Attach Solder (50×61×0.15 mm):</strong> Sn-Ag-Cu lead-free solder provides mechanical joining and thermal interface; primary degradation target under thermal cycling</li>
+                <li><strong>Nickel Plating Layer (50×61×0.008 mm):</strong> Thin Ni barrier prevents Cu-Sn inter-diffusion and improves wettability during solder reflow</li>
+                <li><strong>Heatsink Plate (60×65×3 mm):</strong> Aluminum or copper heatsink for thermal management; constrains component during thermal cycling inducing stress concentration in die-attach</li>
+            </ul>
+ 
+            <h3>Failure Mechanism - SAC Die-Attach Delamination</h3>
+            <p>Under thermal cycling (-40°C to 125°C), the SAC die-attach solder layer undergoes progressive delamination due to:</p>
+            <ul>
+                <li><strong>Coefficient of Thermal Expansion (CTE) Mismatch:</strong> Differences between substrate (Cu/ceramic), solder, and heatsink cause cyclic shear stress at interfaces</li>
+                <li><strong>Creep Deformation:</strong> SAC solder exhibits time-dependent plastic deformation (creep) at elevated temperatures during thermal cycles</li>
+                <li><strong>Fatigue Damage Accumulation:</strong> Repeated stress-strain cycles cause microstructural degradation and void nucleation/growth</li>
+                <li><strong>Progressive Delamination:</strong> Accumulated damage manifests as interfacial separation (delamination) reducing thermal and electrical contact</li>
+            </ul>
  
             <h3>Finite Element Model Development</h3>
             <p>The electronic component was modeled comprehensively in Abaqus with detailed attention to mesh refinement, material properties, and boundary conditions:</p>
