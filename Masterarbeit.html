@@ -572,10 +572,6 @@
             <p style="font-size: 16px; margin-top: 2rem; color: rgba(255, 255, 255, 0.95);">Physics-Informed ML Optimization using SciPy for Parameter Identification and Model Selection</p>
 
             <!-- IMAGE 1: Hero Section -->
-            <div class="hero-image">
-                <img src="image1.png" alt="Master's Thesis Project Overview">
-            </div>
-
             <div class="hero-meta">
                 <div class="meta-box">
                     <div class="meta-label">Degree</div>
@@ -728,6 +724,99 @@
             </div>
         </div>
     </section>
+
+    <!-- ============= TECHNICAL IMPLEMENTATION SECTION ============= -->
+    <section id="technical" class="light-alt">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2>Technical Implementation & Abaqus Modeling</h2>
+ 
+            <h3>Finite Element Model Development</h3>
+            <p>The electronic component was modeled comprehensively in Abaqus with detailed attention to mesh refinement, material properties, and boundary conditions:</p>
+ 
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="image3.png" alt="Abaqus Modeling - Mesh View" class="image-card-img">
+                    <img src="image4.png" alt="Abaqus Modeling - Convergence" class="image-card-img">
+                    <img src="image5.png" alt="Abaqus Modeling - Material Layers" class="image-card-img">
+                    <img src="image6.png" alt="Abaqus Modeling - Boundary Conditions" class="image-card-img">
+                    <div class="image-card-content">
+                        <div class="image-card-title">Abaqus FEM Implementation</div>
+                        <div class="image-card-caption">Complete finite element mesh with convergence analysis, mesh refinement at interfaces, boundary conditions (X/Y symmetry, Z-fixed point), and CEEQ field output extraction</div>
+                    </div>
+                </div>
+            </div>
+ 
+            <h3>FEM Model Specifications</h3>
+            <ul>
+                <li><strong>Mesh Refinement:</strong> Fine at corners and die-attach interfaces to capture stress concentration; coarse at boundaries for computational efficiency</li>
+                <li><strong>Mesh Convergence:</strong> Achieved at 0.2484 mm element size with CEEQ values correlating to 7.673% (0 cycles) and 18.972% (1000 cycles) delamination</li>
+                <li><strong>Boundary Conditions:</strong> X-symmetry on Y-axis, Y-symmetry on X-axis, one point fixed at Z=0. Symmetry constraints reduce computational domain by 75%</li>
+                <li><strong>Material Layers:</strong> Hierarchical structure: top copper layer, dielectric (epoxy), SAC die-attach solder, bottom copper substrate</li>
+                <li><strong>Equivalent Creep Strain (CEEQ):</strong> Selected as primary damage indicator for SAC solder degradation under thermal cycling</li>
+                <li><strong>Thermal Cycling:</strong> Applied -40°C to 125°C passive thermal loading, capturing creep-dominant degradation mechanism</li>
+            </ul>
+            
+            <h3>Programming Architecture & Implementation</h3>
+            <p>The computational workflow is implemented in Python with robust object-oriented design enabling systematic model comparison and physics-informed ML parameter optimization:</p>
+
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="image15.png" alt="Programming Architecture" class="image-card-img">
+                    <div class="image-card-content">
+                        <div class="image-card-title">Software Architecture - UML Class Diagram</div>
+                        <div class="image-card-caption">Object-oriented design showing main() function calling 6 damage model subclasses (Miner, HRSu, HRSe, TS, Pavlou, Batsoulas) inheriting from Fatigue base class with shared Coffin-Manson parameters (C1, C2)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Class Architecture & Model Integration</h3>
+            <ul>
+                <li><strong>Base Class (Fatigue):</strong> Abstract class defining common parameters C1, C2 (Coffin-Manson coefficients), endurance point, and shared methods for all damage models</li>
+                <li><strong>Six Subclasses (M1-M6):</strong> Concrete implementations for Miner, HRSu, HRSe, TS, Pavlou, and Batsoulas models, each with unique damage evolution equations</li>
+                <li><strong>Python Framework:</strong> NumPy for numerical operations, SciPy.optimize.minimize for L-BFGS-B physics-informed ML optimization</li>
+                <li><strong>Modular Design:</strong> Extensible architecture for adding new damage models or material systems without modifying base class</li>
+            </ul>
+
+            <h3>Physics-Informed ML Parameter Optimization</h3>
+
+            <p><strong>SciPy L-BFGS-B Implementation:</strong></p>
+            <ul>
+                <li><strong>Optimizer:</strong> scipy.optimize.minimize with method='L-BFGS-B' (Limited-memory BFGS with bounds)</li>
+                <li><strong>Cost Function:</strong> Huber loss combining normalized residuals with physics constraints
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Huber Loss = 0.5 × residual² when |residual| ≤ δ</li>
+                        <li>Huber Loss = δ × (|residual| - 0.5 × δ) when |residual| > δ</li>
+                        <li>Provides robustness against experimental measurement outliers</li>
+                    </ul>
+                </li>
+                <li><strong>Residuals:</strong> (D_experimental - D_predicted) / standard_deviation - normalized by experimental uncertainty</li>
+                <li><strong>Parameters Optimized:</strong> C1 (Coffin-Manson coefficient 1), C2 (Coffin-Manson coefficient 2), endurance limit</li>
+                <li><strong>Parameter Bounds:</strong> C1 ∈ [0.1, 6], C2 ∈ [1, 2], ensures physically realistic parameter space</li>
+                <li><strong>Physics Constraint:</strong> Coffin-Manson equation embedded in loss calculation to enforce thermodynamic consistency</li>
+                <li><strong>Convergence:</strong> Typical convergence achieved in 4-6 iterations with L-BFGS-B quasi-Newton method</li>
+            </ul>
+
+            <h3>Optimization Workflow</h3>
+            <ol style="margin: 1.5rem 0; padding-left: 2rem;">
+                <li><strong>Data Input:</strong> Δε strain values extracted from Abaqus CEEQ field at 10% volume damage threshold</li>
+                <li><strong>Experimental Reference:</strong> Delamination measurements from SAM/PIRT at 6 thermal cycle points (0, 200, 400, 600, 800, 1000)</li>
+                <li><strong>Initial Parameters:</strong> Coffin-Manson coefficients from literature with physical bounds</li>
+                <li><strong>L-BFGS-B Optimization:</strong> Minimize Huber loss across all damage measurement points</li>
+                <li><strong>Parameter Extraction:</strong> Optimized C1, C2 values from result.x</li>
+                <li><strong>Final Prediction:</strong> Calculate damage at all cycles using optimized parameters</li>
+                <li><strong>Model Ranking:</strong> Compare predictions across all 6 models, rank by accuracy</li>
+            </ol>
+
+            <div class="highlight-box">
+                <p><strong>✓ Physics-Informed Advantage:</strong> Integration of Coffin-Manson physics directly into loss function constrains optimization to physically meaningful parameter space, preventing overfitting and ensuring model interpretability.</p>
+            </div>
+
+            <div class="highlight-box warning">
+                <p><strong>✓ Comprehensive Implementation:</strong> Python architecture enables seamless integration of Abaqus FEM results with 6 damage models and automated SciPy L-BFGS-B parameter optimization for physics-informed ML identification across entire thermal cycling regime.</p>
+            </div>
+        </div>
+    </section>
+
 
     <!-- ============= RESULTS SECTION ============= -->
     <section id="results" class="light">
@@ -905,98 +994,7 @@
         </div>
     </section>
 
-       <!-- ============= TECHNICAL IMPLEMENTATION SECTION ============= -->
-    <section id="technical" class="light-alt">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2>Technical Implementation & Abaqus Modeling</h2>
- 
-            <h3>Finite Element Model Development</h3>
-            <p>The electronic component was modeled comprehensively in Abaqus with detailed attention to mesh refinement, material properties, and boundary conditions:</p>
- 
-            <div class="image-grid">
-                <div class="image-card">
-                    <img src="image3.png" alt="Abaqus Modeling - Mesh View" class="image-card-img">
-                    <img src="image4.png" alt="Abaqus Modeling - Convergence" class="image-card-img">
-                    <img src="image5.png" alt="Abaqus Modeling - Material Layers" class="image-card-img">
-                    <img src="image6.png" alt="Abaqus Modeling - Boundary Conditions" class="image-card-img">
-                    <div class="image-card-content">
-                        <div class="image-card-title">Abaqus FEM Implementation</div>
-                        <div class="image-card-caption">Complete finite element mesh with convergence analysis, mesh refinement at interfaces, boundary conditions (X/Y symmetry, Z-fixed point), and CEEQ field output extraction</div>
-                    </div>
-                </div>
-            </div>
- 
-            <h3>FEM Model Specifications</h3>
-            <ul>
-                <li><strong>Mesh Refinement:</strong> Fine at corners and die-attach interfaces to capture stress concentration; coarse at boundaries for computational efficiency</li>
-                <li><strong>Mesh Convergence:</strong> Achieved at 0.2484 mm element size with CEEQ values correlating to 7.673% (0 cycles) and 18.972% (1000 cycles) delamination</li>
-                <li><strong>Boundary Conditions:</strong> X-symmetry on Y-axis, Y-symmetry on X-axis, one point fixed at Z=0. Symmetry constraints reduce computational domain by 75%</li>
-                <li><strong>Material Layers:</strong> Hierarchical structure: top copper layer, dielectric (epoxy), SAC die-attach solder, bottom copper substrate</li>
-                <li><strong>Equivalent Creep Strain (CEEQ):</strong> Selected as primary damage indicator for SAC solder degradation under thermal cycling</li>
-                <li><strong>Thermal Cycling:</strong> Applied -40°C to 125°C passive thermal loading, capturing creep-dominant degradation mechanism</li>
-            </ul>
-            
-            <h3>Programming Architecture & Implementation</h3>
-            <p>The computational workflow is implemented in Python with robust object-oriented design enabling systematic model comparison and physics-informed ML parameter optimization:</p>
-
-            <div class="image-grid">
-                <div class="image-card">
-                    <img src="image15.png" alt="Programming Architecture" class="image-card-img">
-                    <div class="image-card-content">
-                        <div class="image-card-title">Software Architecture - UML Class Diagram</div>
-                        <div class="image-card-caption">Object-oriented design showing main() function calling 6 damage model subclasses (Miner, HRSu, HRSe, TS, Pavlou, Batsoulas) inheriting from Fatigue base class with shared Coffin-Manson parameters (C1, C2)</div>
-                    </div>
-                </div>
-            </div>
-
-            <h3>Class Architecture & Model Integration</h3>
-            <ul>
-                <li><strong>Base Class (Fatigue):</strong> Abstract class defining common parameters C1, C2 (Coffin-Manson coefficients), endurance point, and shared methods for all damage models</li>
-                <li><strong>Six Subclasses (M1-M6):</strong> Concrete implementations for Miner, HRSu, HRSe, TS, Pavlou, and Batsoulas models, each with unique damage evolution equations</li>
-                <li><strong>Python Framework:</strong> NumPy for numerical operations, SciPy.optimize.minimize for L-BFGS-B physics-informed ML optimization</li>
-                <li><strong>Modular Design:</strong> Extensible architecture for adding new damage models or material systems without modifying base class</li>
-            </ul>
-
-            <h3>Physics-Informed ML Parameter Optimization</h3>
-
-            <p><strong>SciPy L-BFGS-B Implementation:</strong></p>
-            <ul>
-                <li><strong>Optimizer:</strong> scipy.optimize.minimize with method='L-BFGS-B' (Limited-memory BFGS with bounds)</li>
-                <li><strong>Cost Function:</strong> Huber loss combining normalized residuals with physics constraints
-                    <ul style="margin-top: 0.5rem;">
-                        <li>Huber Loss = 0.5 × residual² when |residual| ≤ δ</li>
-                        <li>Huber Loss = δ × (|residual| - 0.5 × δ) when |residual| > δ</li>
-                        <li>Provides robustness against experimental measurement outliers</li>
-                    </ul>
-                </li>
-                <li><strong>Residuals:</strong> (D_experimental - D_predicted) / standard_deviation - normalized by experimental uncertainty</li>
-                <li><strong>Parameters Optimized:</strong> C1 (Coffin-Manson coefficient 1), C2 (Coffin-Manson coefficient 2), endurance limit</li>
-                <li><strong>Parameter Bounds:</strong> C1 ∈ [0.1, 6], C2 ∈ [1, 2], ensures physically realistic parameter space</li>
-                <li><strong>Physics Constraint:</strong> Coffin-Manson equation embedded in loss calculation to enforce thermodynamic consistency</li>
-                <li><strong>Convergence:</strong> Typical convergence achieved in 4-6 iterations with L-BFGS-B quasi-Newton method</li>
-            </ul>
-
-            <h3>Optimization Workflow</h3>
-            <ol style="margin: 1.5rem 0; padding-left: 2rem;">
-                <li><strong>Data Input:</strong> Δε strain values extracted from Abaqus CEEQ field at 10% volume damage threshold</li>
-                <li><strong>Experimental Reference:</strong> Delamination measurements from SAM/PIRT at 6 thermal cycle points (0, 200, 400, 600, 800, 1000)</li>
-                <li><strong>Initial Parameters:</strong> Coffin-Manson coefficients from literature with physical bounds</li>
-                <li><strong>L-BFGS-B Optimization:</strong> Minimize Huber loss across all damage measurement points</li>
-                <li><strong>Parameter Extraction:</strong> Optimized C1, C2 values from result.x</li>
-                <li><strong>Final Prediction:</strong> Calculate damage at all cycles using optimized parameters</li>
-                <li><strong>Model Ranking:</strong> Compare predictions across all 6 models, rank by accuracy</li>
-            </ol>
-
-            <div class="highlight-box">
-                <p><strong>✓ Physics-Informed Advantage:</strong> Integration of Coffin-Manson physics directly into loss function constrains optimization to physically meaningful parameter space, preventing overfitting and ensuring model interpretability.</p>
-            </div>
-
-            <div class="highlight-box warning">
-                <p><strong>✓ Comprehensive Implementation:</strong> Python architecture enables seamless integration of Abaqus FEM results with 6 damage models and automated SciPy L-BFGS-B parameter optimization for physics-informed ML identification across entire thermal cycling regime.</p>
-            </div>
-        </div>
-    </section>
-
+       
     <!-- ============= CONCLUSION SECTION ============= -->
     <section id="conclusion" class="light">
         <div style="max-width: 1200px; margin: 0 auto;">
