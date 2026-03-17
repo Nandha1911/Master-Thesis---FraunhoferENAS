@@ -881,27 +881,27 @@
         </div>
     </section>
 
-    <!-- ============= TECHNICAL IMPLEMENTATION SECTION ============= -->
+       <!-- ============= TECHNICAL IMPLEMENTATION SECTION ============= -->
     <section id="technical" class="light-alt">
         <div style="max-width: 1200px; margin: 0 auto;">
             <h2>Technical Implementation & Abaqus Modeling</h2>
-
+ 
             <h3>Finite Element Model Development</h3>
             <p>The electronic component was modeled comprehensively in Abaqus with detailed attention to mesh refinement, material properties, and boundary conditions:</p>
-
+ 
             <div class="image-grid">
                 <div class="image-card">
-                    <img src="image3.png" alt="Abaqus Modeling" class="image-card-img">
-                    <img src="image4.png" alt="Abaqus Modeling" class="image-card-img">
-                    <img src="image5.png" alt="Abaqus Modeling" class="image-card-img">
-                    <img src="image6.png" alt="Abaqus Modeling" class="image-card-img">
+                    <img src="image3.png" alt="Abaqus Modeling - Mesh View" class="image-card-img">
+                    <img src="image4.png" alt="Abaqus Modeling - Convergence" class="image-card-img">
+                    <img src="image5.png" alt="Abaqus Modeling - Material Layers" class="image-card-img">
+                    <img src="image6.png" alt="Abaqus Modeling - Boundary Conditions" class="image-card-img">
                     <div class="image-card-content">
                         <div class="image-card-title">Abaqus FEM Implementation</div>
                         <div class="image-card-caption">Complete finite element mesh with convergence analysis, mesh refinement at interfaces, boundary conditions (X/Y symmetry, Z-fixed point), and CEEQ field output extraction</div>
                     </div>
                 </div>
             </div>
-
+ 
             <h3>FEM Model Specifications</h3>
             <ul>
                 <li><strong>Mesh Refinement:</strong> Fine at corners and die-attach interfaces to capture stress concentration; coarse at boundaries for computational efficiency</li>
@@ -911,7 +911,7 @@
                 <li><strong>Equivalent Creep Strain (CEEQ):</strong> Selected as primary damage indicator for SAC solder degradation under thermal cycling</li>
                 <li><strong>Thermal Cycling:</strong> Applied -40°C to 125°C passive thermal loading, capturing creep-dominant degradation mechanism</li>
             </ul>
-
+            
             <h3>Programming Architecture & Implementation</h3>
             <p>The computational workflow is implemented in Python with robust object-oriented design enabling systematic model comparison and physics-informed ML parameter optimization:</p>
 
@@ -929,19 +929,6 @@
             <ul>
                 <li><strong>Base Class (Fatigue):</strong> Abstract class defining common parameters C1, C2 (Coffin-Manson coefficients), endurance point, and shared methods for all damage models</li>
                 <li><strong>Six Subclasses (M1-M6):</strong> Concrete implementations for Miner, HRSu, HRSe, TS, Pavlou, and Batsoulas models, each with unique damage evolution equations</li>
-                <li><strong>Core Methods:</strong> 
-                    <ul style="margin-top: 0.5rem;">
-                        <li>__init__() - Initialize parameters</li>
-                        <li>coffin_manson() - Compute Coffin-Manson S-N curve</li>
-                        <li>calc_cm_nf_points() - Calculate number of cycles to failure</li>
-                        <li>normalize_nf_points() - Normalize failure data</li>
-                        <li>calc_dmg_all() - Calculate damage across all cycle points</li>
-                        <li>calc_dmg() - Single damage calculation</li>
-                        <li>transition() - State transition logic</li>
-                        <li>const_dmg(), const_load(), var_load() - Different loading scenarios</li>
-                        <li>plot_line(), plot_line_DmgVsCycleration() - Visualization methods</li>
-                    </ul>
-                </li>
                 <li><strong>Python Framework:</strong> NumPy for numerical operations, SciPy.optimize.minimize for L-BFGS-B physics-informed ML optimization</li>
                 <li><strong>Modular Design:</strong> Extensible architecture for adding new damage models or material systems without modifying base class</li>
             </ul>
